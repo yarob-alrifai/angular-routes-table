@@ -1,0 +1,43 @@
+.table-container {
+  max-width: 75rem;
+  margin: 1.25rem auto;
+  padding: 1rem;
+}
+
+::ng-deep .mat-focus-indicator {
+  justify-content: space-between;
+}
+
+::ng-deep .mat-mdc-header-row {
+  background-color: rgb(228, 228, 228) !important;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+@media (max-width: 37.5rem) {
+  .table-container {
+    margin: 0.625rem;
+    padding: 0.5rem;
+  }
+
+  th,
+  td {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+}
