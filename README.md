@@ -1,27 +1,140 @@
-# RoutesTable
+Приложение "Таблица маршрутов"
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.3.
+Современное приложение на Angular, отображающее сортируемую таблицу сетевых маршрутов. Построено с использованием Angular 18, Angular Material, TypeScript и RxJS. Проект демонстрирует чистую архитектуру, принципы SOLID и использование Angular Signals для реактивного управления состоянием.
 
-## Development server
+## Содержание
+- [Обзор](#обзор)
+- [Функциональность](#функциональность)
+- [Используемые технологии](#используемые-технологии)
+- [Структура проекта](#структура-проекта)
+- [Установка и настройка](#установка-и-настройка)
+- [Использование](#использование)
+- [Вклад в проект](#вклад-в-проект)
+- [Лицензия](#лицензия)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Обзор
+Приложение "Таблица маршрутов" — это одностраничное веб-приложение (SPA), предназначенное для отображения списка сетевых маршрутов в удобной и сортируемой таблице. Оно использует тестовые (моковые) данные маршрутов (содержащие такие свойства, как адрес, маска, шлюз и интерфейс) и позволяет пользователю сортировать таблицу по определённым столбцам (адрес, шлюз или интерфейс). Приложение использует автономные компоненты Angular, внедрение зависимостей с помощью `InjectionToken` и реактивное программирование с Signals и RxJS.
 
-## Code scaffolding
+Проект акцентирует внимание на модульности, поддерживаемости и соблюдении принципов SOLID, особенно принципа инверсии зависимостей (DIP) за счёт использования интерфейсов и токенов внедрения. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Функциональность
+- **Адаптивная таблица**: Отображает сетевые маршруты в стильной таблице в стиле Material Design с колонками для адреса (с маской), шлюза и интерфейса.
+- **Сортировка**: Поддерживает сортировку по возрастанию и убыванию по столбцам адреса, шлюза или интерфейса.
+- **Моковые данные**: Использует заранее заданные тестовые данные для имитации сетевых маршрутов, что упрощает тестирование и расширение.
+- **Реактивное управление состоянием**: Использует Angular Signals для эффективного обновления интерфейса и RxJS для обработки асинхронного получения данных.
+- **Архитектура SOLID**: Реализует интерфейсы (`RouteServiceInterface`, `RouteApiServiceInterface`) и токены внедрения для слабой связанности и тестируемости.
+- **Адаптивный дизайн**: Подстраивается под разные размеры экранов с помощью медиа-запросов CSS для оптимального отображения на мобильных и настольных устройствах.
 
-## Build
+## Используемые технологии
+- **Angular 18.2.0**: Фреймворк для создания SPA с автономными компонентами.
+- **Angular Material 18.2.14**: UI-компоненты для таблицы и функциональности сортировки.
+- **TypeScript 5.5.2**: Статическая типизация для надёжного кода.
+- **RxJS 7.8.0**: Реактивное программирование для работы с асинхронными данными.
+- **Angular Signals**: Современное реактивное управление состоянием для эффективного обновления UI.
+- **SCSS**: Стилизация с использованием предустановленной темы Angular Material (`azure-blue`).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Структура проекта
+Проект следует чистой и модульной архитектуре с чётким разделением ответственности. Ниже представлена структура каталогов с пояснениями:
 
-## Running unit tests
+```
+src/
+├── app/
+│   ├── core/                             # Модуль для общих сервисов и моделей
+│   │   ├── models/
+│   │   │   └── route.model.ts            # Интерфейс, определяющий модель Route
+│   │   ├── services/
+│   │   │   ├── route-api.service.ts      # Сервис для получения данных маршрутов
+│   │   │   ├── route-api-service.interface.ts # Интерфейс для RouteApiService
+│   │   │   ├── route.service.ts          # Сервис для управления маршрутами и сортировки
+│   │   │   └── route-service.interface.ts # Интерфейс и InjectionToken для RouteService
+│   │   └── mock-data/
+│   │       └── mock-routes.ts            # Моковые данные маршрутов для тестирования
+│   ├── features/
+│   │   └── routes-table/
+│   │       ├── routes-table.component.ts  # Компонент для отображения таблицы маршрутов
+│   │       ├── routes-table.component.html # HTML-шаблон для таблицы
+│   │       └── routes-table.component.scss # SCSS-стили для таблицы
+│   ├── app.component.ts                   # Корневой компонент
+│   ├── app.component.html                 # Шаблон корневого компонента (предполагается минимальным)
+│   ├── app.component.scss                 # Стили корневого компонента (предполагается минимальным)
+│   ├── app.config.ts                      # Конфигурация приложения (провайдеры)
+│   ├── main.ts                            # Точка входа приложения (предполагается стандартной)
+│   ├── styles.scss                        # Глобальные стили (предполагается минимальным)
+│   └── index.html                         # Главный HTML-файл (предполагается стандартным)
+├── angular.json                           # Конфигурация Angular CLI
+├── package.json                           # Зависимости и скрипты проекта
+├── tsconfig.app.json                      # Конфигурация TypeScript для приложения (не предоставлена)
+└── tsconfig.spec.json                     # Конфигурация TypeScript для тестов (не предоставлена)
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Основные компоненты
+- **Модуль Core**:
+  - `models/route.model.ts`: Определяет интерфейс `Route` (`uuid`, `address`, `mask`, `gateway`, `interface`).
+  - `services/route-api.service.ts`: Реализует `RouteApiServiceInterface` для получения моковых маршрутов с использованием RxJS `of`.
+  - `services/route.service.ts`: Реализует `RouteServiceInterface` для управления маршрутами, сортировки и преобразования RxJS Observables в Signals.
+  - `mock-data/mock-routes.ts`: Содержит моковые данные для тестирования.
+- **Модуль Features**:
+  - `routes-table/routes-table.component.ts`: Автономный компонент, отображающий таблицу, внедряющий `RouteServiceInterface` и управляющий сортировкой.
+  - `routes-table.component.html`: Рендерит таблицу в стиле Material Design с сортируемыми столбцами.
+  - `routes-table.component.scss`: Стили для таблицы и контейнера с поддержкой адаптивного дизайна.
+- **Корень**:
+  - `app.component.ts`: Корневой компонент, импортирующий и рендерящий `RoutesTableComponent`.
+  - `app.config.ts`: Настраивает провайдеры, включая `RouteService` для `RouteServiceInterface`.
 
-## Running end-to-end tests
+## Установка и настройка
+Следуйте этим шагам для локальной установки и запуска проекта:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Требования
+- **Node.js**: Версия 18.x или новее.
+- **Angular CLI**: Версия 18.2.3 (`npm install -g @angular/cli@18.2.3`).
 
-## Further help
+### Шаги
+1. **Клонируйте репозиторий**:
+   ```bash
+   git clone https://github.com/your-username/routes-table.git
+   cd routes-table
+   ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2. **Установите зависимости**:
+   ```bash
+   npm install
+   ```
+
+3. **Запустите сервер разработки**:
+   ```bash
+   npm start
+   ```
+   Приложение будет доступно по адресу `http://localhost:4200`.
+
+4. **Соберите проект для продакшена**:
+   ```bash
+   npm run build
+   ```
+   Результат будет в каталоге `dist/routes-table`.
+
+5. **Запустите модульные тесты**:
+   ```bash
+   npm test
+   ```
+
+## Использование
+- Откройте приложение в браузере (`http://localhost:4200`).
+- Таблица отображает сетевые маршруты со столбцами:
+  - **Адрес**: Адрес назначения с маской (например, `0.0.0.0/0`).
+  - **Шлюз**: IP-адрес шлюза.
+  - **Интерфейс**: Сетевой интерфейс (например, `Подключение Ethernet`).
+- Щёлкните по заголовкам столбцов (Адрес, Шлюз или Интерфейс), чтобы сортировать по возрастанию или убыванию.
+- Таблица адаптивна и подстраивается под разные размеры экранов.
+
+## Вклад в проект
+Приветствуются любые вклады! Чтобы внести изменения:
+1. Сделайте форк репозитория.
+2. Создайте новую ветку (`git checkout -b feature/your-feature`).
+3. Внесите изменения и закоммитьте (`git commit -m 'Add your feature'`).
+4. Отправьте ветку в репозиторий (`git push origin feature/your-feature`).
+5. Откройте Pull Request.
+
+Пожалуйста, убедитесь, что ваш код соответствует стандартам проекта и включает тесты, если применимо.
+
+## Лицензия
+Проект распространяется под лицензией MIT. Подробности см. в файле [LICENSE](LICENSE).
